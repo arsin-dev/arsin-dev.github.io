@@ -1,2 +1,10 @@
 @import "root.css";
 
+html, body {
+    height: 40rem;
+}
+
+body {
+	display: table-cell;
+ 	vertical-align: middle;
+}

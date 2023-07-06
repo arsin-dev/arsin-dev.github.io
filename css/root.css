@@ -3,23 +3,25 @@
   --gray: #b1b1b1;
 }
 
+html {
+  display: table;
+  margin: auto;
+}
+
 body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  min-height: 100vh;
   max-width: 600px;
-  width:80%;
-  position:absolute;
-  margin-left:-40%;
-  left:50%;
 
   font-family: Consolas, monaco, monospace;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
   line-height: 20px;
+
+
 }
 
 div.main {
