@@ -30,6 +30,7 @@ div.main {
 
   width: calc(min(100%, 900px));
   flex-grow: 1;
+  min-height: 100vh;
 
   margin: 0 auto;
 }
@@ -38,6 +39,12 @@ div.header {
   display: grid;
   width: 100%;
   margin: 2rem 0;
+}
+
+.main > .header:first-child {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
 }
 
 a {
