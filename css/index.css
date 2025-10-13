@@ -1,1 +1,12 @@
 @import "root.css";
+
+.bottom-image {
+  margin: 2rem 0;
+}
+
+.bottom-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
