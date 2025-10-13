@@ -42,20 +42,34 @@ div.header {
 
 a {
   color: var(--gray);
-  border-bottom: 1px var(--gray);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
 }
 
 a:visited {
   color: var(--gray);
-  border-bottom: 1px var(--gray);
+  border-bottom: 1px solid transparent;
 }
 
 a:hover {
   color: var(--black);
-  border-bottom: 1px var(--gray);
+  border-bottom: 1px dashed var(--gray);
 }
 
 ul {
-  list-style-type: disc;
+  list-style: none;
+  padding: 0;
   margin: 0;
+}
+
+li {
+  margin-bottom: 1rem;
+}
+
+h1, h2, h3, .header {
+  color: var(--black);
+}
+
+small {
+  color: var(--gray);
 }
