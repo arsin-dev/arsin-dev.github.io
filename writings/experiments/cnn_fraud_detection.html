@@ -106,34 +106,27 @@ optimizer = optim.AdamW(model.parameters(), lr=0.001)</code></pre>
 model.train()
 
 for epoch in range(num_epochs):
-running_loss = 0.0
-correct = 0
-total = 0
+    running_loss = 0.0
+    correct = 0
+    total = 0
 
-loop = tqdm(dataloader, leave=True)
+    loop = tqdm(dataloader, leave=True)
+    for images, labels in loop:
+        images = images.to(device)
+        labels = labels.to(device)
 
-for images, labels in loop:
-    images = images.to(device)
-    labels = labels.to(device)
+        optimizer.zero_grad()
+        outputs = model(images)
+        y_onehot = nn.functional.one_hot(labels, num_classes=2).float()
+        loss_val = loss(outputs, y_onehot)
+        running_loss += loss_val.item()
+        loss_val.backward()
+        optimizer.step()
+        _, predicted = torch.max(outputs.data, 1)
+        total += labels.size(0)
+        correct += (predicted == labels).sum().item()
 
-    optimizer.zero_grad()
-
-    outputs = model(images)
-
-    y_onehot = nn.functional.one_hot(labels, num_classes=2).float()
-
-    loss_val = loss(outputs, y_onehot)
-
-    running_loss += loss_val.item()
-    loss_val.backward()
-    optimizer.step()
-
-    _, predicted = torch.max(outputs.data, 1)
-    total += labels.size(0)
-
-    correct += (predicted == labels).sum().item()
-
-    ...</code></pre>
+        ...</code></pre>
 
         <h2>Results and Conclusion</h2>
         <p>
