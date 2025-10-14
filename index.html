@@ -36,8 +36,24 @@
             </ul>
         </div>
         <div class="bottom-image">
-            <img src="images/dolphin-optimized.jpg" alt="Dolphin formed by white dots jumping above water" loading="lazy">
+            <img 
+                id="dolphin-img"
+                src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAKKADAAQAAAABAAAAGgAAAAD/wgARCAAaACgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAwIEAQUABgcICQoL/8QAwxAAAQMDAgQDBAYEBwYECAZzAQIAAxEEEiEFMRMiEAZBUTIUYXEjB4EgkUIVoVIzsSRiMBbBctFDkjSCCOFTQCVjFzXwk3OiUESyg/EmVDZklHTCYNKEoxhw4idFN2WzVXWklcOF8tNGdoDjR1ZmtAkKGRooKSo4OTpISUpXWFlaZ2hpand4eXqGh4iJipCWl5iZmqClpqeoqaqwtba3uLm6wMTFxsfIycrQ1NXW19jZ2uDk5ebn6Onq8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAABAgADBAUGBwgJCgv/xADDEQACAgEDAwMCAwUCBQIEBIcBAAIRAxASIQQgMUETBTAiMlEUQAYzI2FCFXFSNIFQJJGhQ7EWB2I1U/DRJWDBROFy8ReCYzZwJkVUkiei0ggJChgZGigpKjc4OTpGR0hJSlVWV1hZWmRlZmdoaWpzdHV2d3h5eoCDhIWGh4iJipCTlJWWl5iZmqCjpKWmp6ipqrCys7S1tre4ubrAwsPExcbHyMnK0NPU1dbX2Nna4OLj5OXm5+jp6vLz9PX29/j5+v/bAEMACQkJCQkJEAkJEBYQEBAWHhYWFhYeJh4eHh4eJi4mJiYmJiYuLi4uLi4uLjc3Nzc3N0BAQEBASEhISEhISEhISP/bAEMBCwwMEhESHxERH0szKjNLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS//aAAwDAQACEQMRAAABicr0+fJOCMyOSDSfLBg8At85kj//2gAIAQEAAQUCYBLofuBRDzqyKdqOgePan3v/2gAIAQMRAT8B7v/aAAgBAhEBPwFH9e3/2gAIAQEABj8Cen3tfua/zP8A/8QAMxABAAMAAgICAgIDAQEAAAILAREAITFBUWFxgZGhscHw0RDh8SAwQFBgcICQoLDA0OD/2gAIAQEAAT8h/wCAj5P/AMHAtjjhUUf9nUoOqg8zfU//AAl//9oADAMBAAIRAxEAABDPw13LX//EADMRAQEBAAMAAQIFBQEBAAEBCQEAESExEEFRYSBx8JGBobHRweHxMEBQYHCAkKCwwNDg/9oACAEDEQE/ECT6ebb5/9oACAECEQE/EHfiT143zb//2gAIAQEAAT8QahAX4qaVIo0a0riJ080SnDqFdU5svFWMnqKAUYcbeCKPNQ9FjLFiwf8AH//Z" 
+                data-src="images/dolphin.jpg"
+                alt="Dolphin formed by white dots jumping above water" 
+                class="blur"
+            >
         </div>
+        <script>
+            const img = document.getElementById('dolphin-img');
+            const fullImg = new Image();
+            fullImg.src = img.dataset.src;
+            fullImg.onload = () => {
+                img.src = fullImg.src;
+                img.classList.remove('blur');
+                img.classList.add('loaded');
+            };
+        </script>
     </div>
 </body>
 </html>
