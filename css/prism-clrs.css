@@ -1,0 +1,81 @@
+/* Prism.js CLRS theme (inspired by clrs.cc / Ghostty CLRS) */
+
+/* Base */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #111111; /* black */
+  background: #ffffff; /* light gray */
+  text-shadow: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+pre[class*="language-"] {
+  padding: 1rem;
+  margin: 0.5rem 0 1.25rem;
+  overflow: auto;
+  border-radius: 8px;
+}
+
+:not(pre) > code[class*="language-"] {
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  white-space: normal;
+}
+
+/* Selection */
+pre[class*="language-"] ::selection, pre[class*="language-"]::selection,
+code[class*="language-"] ::selection, code[class*="language-"]::selection {
+  background: #FFDC00; /* yellow */
+  color: #111111;
+}
+
+/* Tokens mapped to CLRS palette */
+.token.comment, .token.prolog, .token.doctype, .token.cdata {
+  color: #657786; /* muted gray */
+  font-style: italic;
+}
+
+.token.punctuation { color: #5f6c7b; /* darker gray */ }
+
+.token.property, .token.tag, .token.deleted {
+  color: #FF4136; /* red */
+}
+
+.token.boolean, .token.constant, .token.symbol { color: #F012BE; /* fuchsia */ }
+
+.token.number { color: #FF851B; /* orange */ }
+
+.token.selector, .token.attr-name, .token.string, .token.char, .token.inserted {
+  color: #2ECC40; /* green */
+}
+
+.token.operator, .token.entity, .token.url { color: #5f6c7b; /* darker gray */ }
+
+.token.atrule, .token.attr-value { color: #01FF70; /* lime */ }
+
+.token.keyword { color: #B10DC9; /* purple */ }
+
+.token.function { color: #7FDBFF; /* aqua */ }
+
+.token.class-name { color: #FFDC00; /* yellow */ }
+
+.token.regex { color: #3D9970; /* olive */ }
+
+.token.important, .token.bold { color: #F012BE; font-weight: bold; }
+.token.italic { font-style: italic; }
+
+.token.namespace { opacity: 0.7; }
+
+/* Code block title (optional utility if used later) */
+.code-title {
+  background: #001f3f; /* navy */
+  color: #ffffff;
+  padding: 0.5rem 0.75rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  font-size: 0.85rem;
+}
+
+

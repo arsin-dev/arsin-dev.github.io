@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="../../css/writings.css">
+    <link rel="stylesheet" href="../../css/prism-clrs.css">
     <title>arsin -> Experimenting with Fraud Detection</title>
   </head>
   <body>
@@ -33,48 +34,48 @@
 
         <h2>Custom Dataset Class</h2>
         <p>Here's the PyTorch Dataset implementation. Nothing fancy—just S3 reads with some standard ImageNet normalization:</p>
-        <pre><code>class CarImageDataset(Dataset):
-def __init__(self, annotations_file, transform=None):
-    self.img_labels = annotations_file
-    if transform is None:
-        self.transform = transforms.Compose([
-            transforms.Resize((512, 512)),
-            transforms.ToTensor(),
-            transforms.ConvertImageDtype(torch.float),
-            transforms.Normalize(
-                mean=(0.485, 0.456, 0.406),
-                std=(0.229, 0.224, 0.225)
-            )
-        ])
-    else:
-        self.transform = transform
+        <pre><code class="language-python">class CarImageDataset(Dataset):
+    def __init__(self, annotations_file, transform=None):
+        self.img_labels = annotations_file
+        if transform is None:
+            self.transform = transforms.Compose([
+                transforms.Resize((512, 512)),
+                transforms.ToTensor(),
+                transforms.ConvertImageDtype(torch.float),
+                transforms.Normalize(
+                    mean=(0.485, 0.456, 0.406),
+                    std=(0.229, 0.224, 0.225)
+                )
+            ])
+        else:
+            self.transform = transform
 
-def load_from_s3(self, s3_path):
-    client = boto3.client('s3')
-    bucket, key = s3_path[5:].split('/', 1)
+    def load_from_s3(self, s3_path):
+        client = boto3.client('s3')
+        bucket, key = s3_path[5:].split('/', 1)
 
-    resp = client.get_object(Bucket=bucket, Key=key)
-    data = resp['Body'].read()
+        resp = client.get_object(Bucket=bucket, Key=key)
+        data = resp['Body'].read()
 
-    try:
-        image = Image.open(BytesIO(data)).convert('RGB')
-    except Exception as e:
-        print(f'Error: Load failed for file {s3_path}.')
+        try:
+            image = Image.open(BytesIO(data)).convert('RGB')
+        except Exception as e:
+            print(f'Error: Load failed for file {s3_path}.')
 
-    return image
+        return image
 
-def __len__(self):
-    return len(self.img_labels)
+    def __len__(self):
+        return len(self.img_labels)
 
-def __getitem__(self, idx):
-    img_path = self.img_labels['file_path'].iloc[idx]
-    image = self.load_from_s3(img_path)
-    label = self.img_labels['label'].iloc[idx]
+    def __getitem__(self, idx):
+        img_path = self.img_labels['file_path'].iloc[idx]
+        image = self.load_from_s3(img_path)
+        label = self.img_labels['label'].iloc[idx]
 
-    if self.transform:
-        image = self.transform(image)
+        if self.transform:
+            image = self.transform(image)
 
-    return image, label
+        return image, label
 
 data = CarImageDataset(train)
 dataloader = DataLoader(data, batch_size=64, num_workers=0, shuffle=True)</code></pre>
@@ -87,21 +88,21 @@ dataloader = DataLoader(data, batch_size=64, num_workers=0, shuffle=True)</code>
         <p>
             Next I had to choose a model. In this case I picked ResNet-18 with IMAGENET1K_V1 weights and changed the output to be 2:
         </p>
-        <pre><code>def load_model(weights='IMAGENET1K_V1', n_out=2):
-model = models.resnet18(weights=weights)
-model.fc = nn.Linear(model.fc.in_features, n_out, bias=True)
-return model</code></pre>
+        <pre><code class="language-python">def load_model(weights='IMAGENET1K_V1', n_out=2):
+    model = models.resnet18(weights=weights)
+    model.fc = nn.Linear(model.fc.in_features, n_out, bias=True)
+    return model</code></pre>
 
         <p>
             I also determined a loss function. At first I started with <code>nn.CrossEntropyLoss()</code>, after trying it out I went to <code>nn.BCEWithLogitsLoss()</code>. I also opted for using AdamW since it's the mathematically correct version—there is a bug in Adam, I don't know why Adam isn't removed.
         </p>
-        <pre><code>loss = nn.BCEWithLogitsLoss()
+        <pre><code class="language-python">loss = nn.BCEWithLogitsLoss()
 
 optimizer = optim.AdamW(model.parameters(), lr=0.001)</code></pre>
 
         <h2>Training Loop</h2>
         <p>My training loop was somewhat basic:</p>
-        <pre><code>device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else 'cpu'
+        <pre><code class="language-python">device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else 'cpu'
 model.train()
 
 for epoch in range(num_epochs):
@@ -143,4 +144,6 @@ for images, labels in loop:
         </p>
     </div>
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js" data-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs@1/components/"></script>
  </html>
