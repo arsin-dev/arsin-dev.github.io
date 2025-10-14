@@ -9,20 +9,3 @@ ul {
 li {
   margin-bottom: 1rem;
 }
-
-pre code {
-  display:block;
-  padding:1rem;
-  background:#f8f8f8; /* light */
-  color:#111111; /* text */
-  border-radius:8px;
-  line-height:1.5;
-  overflow:auto;
-}
-
-code {
-  background:#FFDC00; /* CLRS yellow */
-  color:#111111; /* text */
-  padding:0.1rem 0.3rem;
-  border-radius:4px;
-}
