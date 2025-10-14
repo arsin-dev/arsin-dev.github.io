@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../../css/writings.css">
+    <link rel="stylesheet" href="../../css/prism-clrs.css">
+    <title>arsin -> Thought Experiment on Mastering Prompting</title>
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <div><a href="../../index.html">Home</a></div>
+        <div><a href="../index.html">Writings</a></div>
+        <div><a href="../index.html#experiments">Experiments</a></div>
+      </div>
+      <div class="header">Thought Experiment on Mastering Prompting</div>
+
+      <p>
+        Honestly, prompting feels more like vibes than rigorous science, and that's been bugging me. I've been putting off learning proper prompting techniques because the whole landscape is constantly shifting. New models drop every other week, what works for code generation breaks for creative writing, and everything feels perpetually unstable. But I think there's actually a path forward: build intuition through understanding evals.
+      </p>
+
+      <p>s
+        My approach has been studying different benchmarks and evaluations. They expose the specific failure modes and capabilities of LLMs in ways that actually transfer between models.
+      </p>
+
+        <h2>Needle in the Haystack</h2>
+        <p>
+            Take needle-in-haystack. This eval plants a key phrase somewhere in a long context and tests whether the model can retrieve it:
+        </p>
+        <pre><code class="language-python">haystack_template = """
+[1000 words about random topic A]
+[1000 words about random topic B]
+{NEEDLE: "The secret code is: 7B3X9Q"}
+[1000 words about random topic C]
+[1000 words about random topic D]
+"""
+
+question = "What is the secret code given this specific document?"</code></pre>
+
+        <p>
+            Most models show the "lost in the middle" effect. Recall degrades significantly for information placed in the middle of long contexts. Models remember beginnings pretty well and ends even better. This tells you something actionable: put your important information at the start or (ideally) the end of long prompts.
+        </p>
+
+        <h2>Constraint Counting</h2>
+        <p>
+            Constraint counting is another revealing eval. Stack constraints and watch the model fall apart:
+        </p>
+        <pre><code class="language-python">constraints_1 = "Write a sentence about cats."
+constraints_2 = "Write a sentence about cats. Use exactly 10 words."
+constraints_3 = "Write a sentence about cats. Use exactly 10 words. Include the word 'skibidi'."
+constraints_4 = "Write a sentence about cats. Use exactly 10 words. Include the word 'skibidi'. End with a question mark."
+constraints_5 = "Write a sentence about cats. Use exactly 10 words. Include the word 'skibidi'. End with a question mark. Do not use the letter 'e'."
+constraints_6 = "Write a sentence about cats. Use exactly 10 words. Include the word 'skibidi'. End with a question mark. Do not use the letter 'e'. Start with the word 'Then'."</code></pre>
+
+        <p>
+            Performance drops hard around 4-5 simultaneous constraints. The lesson? Chain your constraints across multiple prompts, or stick to 2-3 max when you need them together.
+        </p>
+
+        <h2>Creating Your Own Evals</h2>
+        <p>
+            At this point you can start creating your own evals.
+        </p>
+        <p>
+            I've been playing with a "telephone game" eval. Start with a seed prompt, have the model summarize it, then expand the summary, then summarize again, then expand, and diff the results. This reveals how models drift from original intent. The fix? Add explicit anchors to your prompts:
+        </p>
+        <pre><code class="language-python">anchors = [
+    "Maintain a happy, excited tone",
+    "Preserve a futuristic atmosphere",
+    "Dialog that is similar to how people actually talk to one another"
+]</code></pre>
+
+        <p>
+            You can even add a verification step where the model checks if its output respects the anchors.
+        </p>
+
+        <h2>Conclusion</h2>
+        <p>
+            Honestly, this might not be the optimal path to prompt mastery, but it's been fun and educational. I got to learn about evals and build some goofy ones myself. Real mastery probably comes from deliberate practice and iteration. Mitchell Hashimoto's post on how he uses LLMs is excellent. The core insight is simple: more context equals better performance. <a href="https://mitchellh.com/writing/non-trivial-vibing">https://mitchellh.com/writing/non-trivial-vibing</a>
+        </p>
+        <p>
+            I'll write a follow-up breaking down more advanced prompting techniques after I've experimented more.
+        </p>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js" data-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs@1/components/"></script>
+ </html>
