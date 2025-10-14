@@ -29,7 +29,7 @@
             Data is always the first problem. I got some friends to generate accident images using GPT-4, DALL-E, Nova, and Titan. Combined with real images I scraped, we're sitting at... 578 samples. Yeah. Not great, not terrible for a quick experiment.
         </p>
         <p>
-            Everything lives in S3, so instead of downloading gigs of images locally (annoying), I built a custom dataloader that pulls directly from S3. Built a DataFrame with file paths and labels, did some cleaning—turns out some scraped images had weird extensions that needed filtering with <code>df[~df['file_path'].str.endswith('x')]</code>. The data was hilariously imbalanced towards AI images, so I had to add stratified splitting logic.
+            Everything lives in S3, so instead of downloading gigs of images locally (annoying), I built a custom dataloader that pulls directly from S3. Built a DataFrame with file paths and labels, did some cleaning—turns out some scraped images had weird extensions that needed filtering with <code>df[~df['file_path'].str.endswith('x')]</code>. The data was quite imbalanced towards AI images, so I had to add stratified splitting logic.
         </p>
 
         <h2>Custom Dataset Class</h2>
