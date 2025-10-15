@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../../css/writings.css">
+    <link rel="stylesheet" href="../../css/prism-clrs.css">
+    <title>arsin -> Matching Things 1/n</title>
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <div><a href="../../index.html">Home</a></div>
+        <div><a href="../index.html">Writings</a></div>
+      </div>
+      <div class="header">Matching Things 1/n</div>
+
+      <p>
+        Matching patterns is one of those fundamental problems that shows up everywhere once you start noticing it. Legal documents to attorneys. Patients to doctors. Songs to listeners. Videos to viewers. The recommendation systems powering Spotify, YouTube, and Netflix all have their own quirks and optimizations, but at their core, they're solving the same problem: given a thing and a bunch of possible matches, which one actually fits?
+      </p>
+
+      <p>
+        I originally got into this while trying to match legal documents to attorneys. Sounds niche, but it forced me to think about the structure of matching problems in general. And honestly, once you break it down, it's not that complicated.
+      </p>
+
+      <h2>Step 1: Filter Aggressively</h2>
+      <p>
+        The first move is always filtering. Can we reduce the search space? If you're dealing with millions of attorneys and millions of documents, you need to cut that down fast. Maybe you scope by jurisdiction. One document, ten attorneys who actually practice in that state. Suddenly you have a tractable problem.
+      </p>
+
+      <p>
+        Filtering isn't trivial though. It requires deep understanding of your domain and your data. But it's transparent and provable, which is nice. Remember Akinator, that genie game that guesses which character you're thinking of? It's just a decision tree. Ask the right questions, eliminate huge chunks of possibilities with each answer. At its core, it's filtering out things that don't make sense based on new information.
+      </p>
+
+      <h2>Step 2: Rank What's Left</h2>
+      <p>
+        Once you've filtered down to a reasonable set, you need to rank. This is where things get interesting. How do you compare an apple to an orange? The answer is: you don't. You reframe the problem. Instead of comparing inherent qualities, you ask "which one satisfies me in the morning?" Now you have a learnable objective.
+      </p>
+
+      <p>
+        This is why I love reinforcement learning. You have a vast space with complicated features and interactions, but you can reformulate everything as state, action, reward. Machines can learn. So why not teach them?
+      </p>
+
+      <p>
+        The weights are different for everyone. My morning apple preference isn't yours. But that's fine. The system learns the weights through interaction and feedback. That's the whole game.
+      </p>
+
+      <h2>What's Next</h2>
+      <p>
+        This is my high-level first pass at thinking through matching systems. I want to dive deeper into the technical details, explore different ranking algorithms, maybe build some toy examples to test these ideas. The plan is to keep exploring and publish findings as I learn.
+      </p>
+
+      <p>
+        Matching is everywhere. Let's figure out how it actually works.
+      </p>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js" data-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs@1/components/"></script>
+</html>
