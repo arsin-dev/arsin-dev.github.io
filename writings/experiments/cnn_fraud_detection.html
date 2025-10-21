@@ -5,7 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="../../css/writings.css">
     <link rel="stylesheet" href="../../css/prism-clrs.css">
-    <title>arsin -> Experimenting with Fraud Detection</title>
+    <title>arsin -> Experimenting with Fraud Detection 1/n</title>
   </head>
   <body>
     <div class="main">
@@ -13,7 +13,7 @@
         <div><a href="../../index.html">Home</a></div>
         <div><a href="../index.html">Writings</a></div>
       </div>
-      <div class="header">Experimenting with Fraud Detection</div>
+      <div class="header">Experimenting with Fraud Detection 1/n</div>
 
       <p>
         I wanted to get more familiar with PyTorch and also see if I could actually detect AI-generated images. The kind of stuff that's getting harder to spot as these models get better.
@@ -133,6 +133,8 @@ for epoch in range(num_epochs):
         </p>
         <p>
             My conclusion is that I could predict if something was AI generated or not, if I scoped the problem down by a lot. I also should not use ResNet with such a small training set—it has roughly ~12 million parameters so fine tuning off a small amount was not great. Also I need better data, like it should be more balanced with fake and real images.
+
+            In the next part I will go through other techniques on how to make this approach even better!
         </p>
     </div>
   </body>
